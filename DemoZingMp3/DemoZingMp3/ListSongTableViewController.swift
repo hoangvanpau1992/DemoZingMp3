@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ListSongTableViewController: UIViewController {
     
@@ -21,7 +22,7 @@ class ListSongTableViewController: UIViewController {
     
     private var songs: [Song] = []
     private let searchControllerView = UISearchController(searchResultsController: nil)
-    fileprivate var resultsSearchContacts: [Song] = []
+    fileprivate var resultsSearchSongs: [Song] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,7 @@ class ListSongTableViewController: UIViewController {
         searchControllerView.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
         seachController.addSubview(searchControllerView.searchBar)
+        searchControllerView.searchResultsUpdater = self
     }
     
     func isfiltering() -> Bool {
@@ -47,6 +49,15 @@ class ListSongTableViewController: UIViewController {
 
     func searchBarIsEmpty() -> Bool {
         return searchControllerView.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        let managedObjectContext = Database.shared.getContext()
+        let fetchRequest: NSFetchRequest<Song> = Song.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name contains[c] %@", searchText)
+        resultsSearchSongs = try! managedObjectContext.fetch(fetchRequest)
+        
+        tableView.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -80,19 +91,36 @@ class ListSongTableViewController: UIViewController {
     
 }
 
-extension ListSongTableViewController: UITableViewDelegate, UITableViewDataSource {
+extension ListSongTableViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return songs.count
+        if isfiltering() {
+           return resultsSearchSongs.count
+        } else {
+            return songs.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
+        if isfiltering() {
+        cell.nameSongLabel.text = resultsSearchSongs[indexPath.row].name
+        } else {
         cell.nameSongLabel.text = songs[indexPath.row].name
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
+    }
+}
+
+extension ListSongTableViewController: UISearchResultsUpdating {
+    
+    // Search Controller Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
     }
 }
 

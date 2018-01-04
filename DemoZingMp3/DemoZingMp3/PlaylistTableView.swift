@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class PlaylistTableView: UITableViewController {
     
@@ -28,6 +29,16 @@ class PlaylistTableView: UITableViewController {
         playList = try! managedObjectContext.fetch(PlayList.fetchRequest()) as! [PlayList]
         
         tableView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let listSongsplaylistTableView = segue.destination as? ListSongsplaylistTableView else {return}
+        
+        let indexPath = tableView.indexPathForSelectedRow
+        
+        let selectedPlaylist = playList[(indexPath?.row)!]
+        listSongsplaylistTableView.playList = selectedPlaylist
     }
 
     // MARK: - Table view data source
@@ -51,13 +62,7 @@ class PlaylistTableView: UITableViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let indexPath = tableView.indexPathForSelectedRow
-        
-        guard let currentCell = tableView.cellForRow(at: indexPath!) as? UITableViewCell else {return}
-        
-        print(currentCell.textLabel!.text)
-    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

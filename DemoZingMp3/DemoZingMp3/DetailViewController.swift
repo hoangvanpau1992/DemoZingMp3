@@ -138,6 +138,9 @@ class DetailViewController: UIViewController, AVAudioPlayerDelegate {
         self.present(playList, animated: true, completion: nil)
     }
     
+    @IBAction func backListSongs(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if repeatSwh.isOn == false {

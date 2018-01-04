@@ -103,7 +103,7 @@
             </objects>
             <point key="canvasLocation" x="-440.80000000000001" y="72.413793103448285"/>
         </scene>
-        <!--Title-->
+        <!--Song-->
         <scene sceneID="6hP-o2-bez">
             <objects>
                 <viewController id="bQu-9W-FzB" customClass="DetailViewController" customModule="DemoZingMp3" customModuleProvider="target" sceneMemberID="viewController">
@@ -230,8 +230,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d8Y-FJ-5dm"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="7qt-fq-wR8">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="okP-nl-K13"/>
+                    <navigationItem key="navigationItem" title="Song" id="7qt-fq-wR8">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="okP-nl-K13">
+                            <connections>
+                                <action selector="backListSongs:" destination="bQu-9W-FzB" id="mAN-kV-AWK"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="ePu-wI-M13">
                             <connections>
                                 <action selector="actionSheetButton:" destination="bQu-9W-FzB" id="9kv-lx-bZT"/>
@@ -252,7 +256,7 @@
             </objects>
             <point key="canvasLocation" x="655.20000000000005" y="3.1484257871064472"/>
         </scene>
-        <!--Playlist Table View-->
+        <!--Title-->
         <scene sceneID="Rb8-dz-dr0">
             <objects>
                 <tableViewController storyboardIdentifier="PlaylistTableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="usT-tK-lje" customClass="PlaylistTableView" customModule="DemoZingMp3" customModuleProvider="target" sceneMemberID="viewController">
@@ -292,22 +296,24 @@
                             <outlet property="delegate" destination="usT-tK-lje" id="tTo-AA-DJO"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Rse-T2-h4T"/>
+                    <navigationItem key="navigationItem" title="Title" id="Gdo-2Q-ES8">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="ku5-1N-yC9"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LaC-MC-BGq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2098" y="45"/>
         </scene>
-        <!--Table View Controller-->
+        <!--List Songsplaylist Table View-->
         <scene sceneID="B66-0x-eYQ">
             <objects>
-                <tableViewController id="dbo-TU-egP" sceneMemberID="viewController">
+                <tableViewController id="dbo-TU-egP" customClass="ListSongsplaylistTableView" customModule="DemoZingMp3" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="YOB-h0-RRe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="GXg-Wb-GcJ" style="IBUITableViewCellStyleDefault" id="PKv-ym-zIr">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailPlaylistCell" textLabel="GXg-Wb-GcJ" style="IBUITableViewCellStyleDefault" id="PKv-ym-zIr">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PKv-ym-zIr" id="wMQ-hL-bLs">
@@ -366,6 +372,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="R3F-ql-JQO">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.233711376" green="0.90828146649999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
